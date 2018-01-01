@@ -6,6 +6,7 @@ from players import random_turn, min_turn, max_turn
 class Game:
     def __init__(self):
         self.table = []
+        self.round = 0
 
     def deal(self, player_list):
         all_pieces = list(combinations_with_replacement(range(10), 2))
@@ -20,21 +21,21 @@ class Game:
         print("START TABLE:")
         print(self.table)
         while min(len(player.hand) for player in list_players) > 0 and not all(player.passed for player in list_players):
+            self.round += 1
+            print("\nROUND", self.round)
             for player in list_players:
                 player.take_turn(self.table)
-
-                print("TABLE:")
-                print(self.table)
+                print("Table:", self.table)
 
         print("---------")
         leaderboard = sorted(list_players, key=lambda player: player.score())
         print(leaderboard)
         print(list(player.score() for player in leaderboard))
+        for player in leaderboard:
+            print(player.hand)
         # for player in list_players:
 
-
     def play(self, player, piece):
-
         player.passed = False
         if piece == "PASS":
             player.passed = True
@@ -68,6 +69,7 @@ class Player:
 
     def score(self):
         return sum(sum(piece) for piece in self.hand)
+
 
 def create_players(number_of_players):
     player_list = []
