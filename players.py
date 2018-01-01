@@ -37,8 +37,10 @@ def max_turn(self, table):
     lastNum = table[-1][1]
     possible = possible_turns(self.hand, firstNum, lastNum)
     possible = sorted(possible, key=lambda x: x[0] + x[1], reverse=True)
-    return possible[0]
-
+    if len(possible) == 0:
+        return "PASS"
+    else:
+        return possible[0]
 
 # snaží se pokládat co nejmenší koncový kámen
 def min_turn(self, table):

@@ -58,17 +58,18 @@ class Game:
 
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, turn):
         self.name = name
         self.hand = []
         self.passed = False
+        self.turn = turn
 
     def reset(self):
         self.passed = False
 
     def take_turn(self, game_state):
         #  PLAYER CODE HERE
-        piece = random_turn(self, game_state)
+        piece = self.turn(self, game_state)
         #
         game.play(self, piece)
 
@@ -76,18 +77,19 @@ class Player:
         return sum(sum(piece) for piece in self.hand)
 
 
-def create_players(number_of_players):
+def create_players():
     player_list = []
-    player_names = ["franta", "pepa", "honza", "alfred"]
+    player_names = ["franta", "pepa", "honza", "borec"]
     #  TODO REPLACE THIS WITH IMPORT PLAYERS
-    for i in range(number_of_players):
-        player_list.append(Player(player_names[i]))
+    for i in range(3):
+        player_list.append(Player(player_names[i], random_turn))
+    player_list.append(Player(player_names[-1], max_turn))
     return player_list
 
 
 if __name__ == "__main__":
     game = Game()
-    list_players = create_players(4)
+    list_players = create_players()
     # vynuluje statistiky
     stats = {}
     for p in list_players:
