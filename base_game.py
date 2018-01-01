@@ -2,6 +2,7 @@ from itertools import combinations_with_replacement
 from random import shuffle
 from players import random_turn, min_turn, max_turn
 
+
 class Game:
     def __init__(self):
         self.table = []
@@ -9,20 +10,21 @@ class Game:
     def deal(self, player_list):
         all_pieces = list(combinations_with_replacement(range(10), 2))
         shuffle(all_pieces)
-        pieces_per_player = len(all_pieces)//len(player_list)
+        pieces_per_player = len(all_pieces) // len(player_list)
         for player in player_list:
             player.hand = all_pieces[:pieces_per_player]
             all_pieces = all_pieces[pieces_per_player:]
         self.table = [all_pieces[0]]
 
     def start_game(self):
-        while 0 < min(len(player.hand) for player in list_players): #todo: all passed:
+        while 0 < min(len(player.hand) for player in list_players):  # todo: all passed:
             for player in list_players:
                 player.take_turn(self.table)
 
                 print(self.table)
 
     def play(self, player, piece):
+        player.hand.remove(piece)
         player.passed = False
         if piece == "PASS":
             player.passed = True
@@ -38,9 +40,6 @@ class Game:
             self.table.append(piece)
         else:
             raise Exception("WRONG TURN", piece, "is not a valid move!\nThe game state is:", self.table)
-        print(piece)
-        print(player.hand)
-        player.hand.remove(piece)
 
 
 class Player:
@@ -53,7 +52,6 @@ class Player:
         piece = random_turn(self, game_state)
         #
         game.play(self, piece)
-
 
 
 def create_players(number_of_players):
