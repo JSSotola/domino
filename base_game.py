@@ -16,11 +16,17 @@ class Game:
         self.table = [all_pieces[0]]
 
     def start_game(self):
-        while 0 < min(len(player.hand) for player in list_players): #todo: all passed:
+        while min(len(player.hand) for player in list_players) > 0 and not all(player.passed for player in list_players):
             for player in list_players:
                 player.take_turn(self.table)
 
                 print(self.table)
+
+        leaderboard = sorted(possible, key=lambda player: player.score(), reverse=True)
+        print(leaderboard)
+        print(player.score() for player in leaderboard)
+        # for player in list_players:
+
 
     def play(self, player, piece):
         player.passed = False
@@ -54,7 +60,8 @@ class Player:
         #
         game.play(self, piece)
 
-
+    def score(self):
+        return sum(sum(piece) for piece in self.hand)
 
 def create_players(number_of_players):
     l = []
