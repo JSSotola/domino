@@ -20,9 +20,9 @@ def possible_turns(hand, first, last):
 
 # hraje náhodně
 def random_turn(self, table):
-    firstNum = table[0][0]
-    lastNum = table[-1][1]
-    possible = possible_turns(self.hand, firstNum, lastNum)
+    first_num = table[0][0]
+    last_num = table[-1][1]
+    possible = possible_turns(self.hand, first_num, last_num)
     print("P", possible)
     if len(possible) == 0:
         return "PASS"

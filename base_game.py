@@ -57,11 +57,11 @@ class Player:
 
 
 def create_players(number_of_players):
-    l = []
+    player_list = []
     #  TODO REPLACE THIS WITH IMPORT PLAYERS
     for i in range(number_of_players):
-        l.append(Player())
-    return l
+        player_list.append(Player())
+    return player_list
 
 
 if __name__ == "__main__":
