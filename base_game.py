@@ -91,15 +91,17 @@ if __name__ == "__main__":
     # vynuluje statistiky
     stats = {}
     for p in list_players:
-        stats[p.name] = 0
+        stats[p.name] = {"name": p.name, "score": 0, "wins": 0}
 
-    for i in range(1000):
+    for i in range(10000):
         # print("================== game #", i, "===================")
         game.deal(list_players)
         players = game.start_game()
+        # winner = min(list_players, key=lambda player: player.score())
+        list_players.sort(key=lambda player: player.score(), reverse=True)
+        stats[list_players[-1].name]["wins"] += 1
         for p in players:
-            stats[p.name] += p.score()
+            stats[p.name]["score"] += p.score()
 
-    leaderboard = sorted(list_players, key=lambda player: stats[player.name])
-    print(list(player.name for player in leaderboard))
+    leaderboard = sorted(list_players, key=lambda player: stats[player.name]["score"])
     print(list(stats[player.name] for player in leaderboard))
