@@ -23,6 +23,7 @@ def random_turn(self, table):
     firstNum = table[0][0]
     lastNum = table[-1][1]
     possible = possible_turns(self.hand, firstNum, lastNum)
+    print("P", possible)
     if len(possible) == 0:
         return "PASS"
     else:

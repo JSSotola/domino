@@ -24,17 +24,19 @@ class Game:
                 print(self.table)
 
     def play(self, player, piece):
-        player.hand.remove(piece)
+
         player.passed = False
         if piece == "PASS":
             player.passed = True
         elif self.table[0][0] in piece:
             end = self.table[0][0]
+            player.hand.remove(piece)
             if end != piece[1]:
                 piece = (piece[1], piece[0])
             self.table = [piece] + self.table
         elif self.table[-1][1] in piece:
             end = self.table[-1][1]
+            player.hand.remove(piece)
             if end != piece[0]:
                 piece = (piece[1], piece[0])
             self.table.append(piece)
