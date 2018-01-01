@@ -7,7 +7,10 @@ class Player:
         self.hand = []
 
     def take_turn(self, game_state):
-        play(self.hand[0])
+        #  PLAYER CODE HERE
+        #
+        #
+        self.play(self.hand[0])
 
     def play(self, piece):
         if game_state[0][0] in piece:
@@ -32,8 +35,6 @@ def create_players(number_of_players):
     for i in range(number_of_players):
         l.append(Player())
     return l
-
-
 
 
 if __name__ == "__main__":
