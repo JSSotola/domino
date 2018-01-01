@@ -106,4 +106,5 @@ if __name__ == "__main__":
             stats[p.name]["score"] += p.score()
 
     leaderboard = sorted(list_players, key=lambda player: stats[player.name]["score"])
-    print(list(stats[player.name] for player in leaderboard))
+    for player in leaderboard:
+        print(stats[player.name])
