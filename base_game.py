@@ -29,7 +29,7 @@ class Game:
 
         print("---------")
         leaderboard = sorted(list_players, key=lambda player: player.score())
-        print(leaderboard)
+        print(list(player.name for player in leaderboard))
         print(list(player.score() for player in leaderboard))
         for player in leaderboard:
             print(player.hand)
