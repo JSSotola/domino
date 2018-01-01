@@ -2,38 +2,40 @@ from itertools import combinations_with_replacement
 from random import shuffle
 from players import random_turn, min_turn, max_turn
 
-
 class Game:
     def __init__(self):
         self.table = []
         self.round = 0
 
     def deal(self, player_list):
+        self.round = 0
+
         all_pieces = list(combinations_with_replacement(range(10), 2))
         shuffle(all_pieces)
         pieces_per_player = len(all_pieces) // len(player_list)
         for player in player_list:
+            player.reset()
             player.hand = all_pieces[:pieces_per_player]
             all_pieces = all_pieces[pieces_per_player:]
         self.table = [all_pieces[0]]
 
     def start_game(self):
-        print("START TABLE:")
-        print(self.table)
+        # print("START TABLE:")
+        # print(self.table)
         while min(len(player.hand) for player in list_players) > 0 and not all(player.passed for player in list_players):
             self.round += 1
-            print("\nROUND", self.round)
+            # print("\nROUND", self.round)
             for player in list_players:
                 player.take_turn(self.table)
-                print("Table:", self.table)
+                # print("Table:", self.table)
 
-        print("---------")
+        # print("---------")
         leaderboard = sorted(list_players, key=lambda player: player.score())
-        print(list(player.name for player in leaderboard))
-        print(list(player.score() for player in leaderboard))
-        for player in leaderboard:
-            print(player.hand)
-        # for player in list_players:
+        # print(list(player.name for player in leaderboard))
+        # print(list(player.score() for player in leaderboard))
+        # for player in leaderboard:
+        #     print(player.hand)
+        return list_players
 
     def play(self, player, piece):
         player.passed = False
@@ -61,6 +63,9 @@ class Player:
         self.hand = []
         self.passed = False
 
+    def reset(self):
+        self.passed = False
+
     def take_turn(self, game_state):
         #  PLAYER CODE HERE
         piece = random_turn(self, game_state)
@@ -81,7 +86,20 @@ def create_players(number_of_players):
 
 
 if __name__ == "__main__":
-    list_players = create_players(4)
     game = Game()
-    game.deal(list_players)
-    game.start_game()
+    list_players = create_players(4)
+    # vynuluje statistiky
+    stats = {}
+    for p in list_players:
+        stats[p.name] = 0
+
+    for i in range(1000):
+        # print("================== game #", i, "===================")
+        game.deal(list_players)
+        players = game.start_game()
+        for p in players:
+            stats[p.name] += p.score()
+
+    leaderboard = sorted(list_players, key=lambda player: stats[player.name])
+    print(list(player.name for player in leaderboard))
+    print(list(stats[player.name] for player in leaderboard))
