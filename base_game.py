@@ -5,6 +5,7 @@ from random import shuffle
 class Player:
     def __init__(self):
         self.hand = []
+        self.passed = False
 
     def take_turn(self, game_state):
         #  PLAYER CODE HERE
@@ -13,12 +14,24 @@ class Player:
         self.play(self.hand[0])
 
     def play(self, piece):
-        if game_state[0][0] in piece:
+        global game_state
+        self.passed = False
+        if piece == "PASS":
+            self.passed = True
+        elif game_state[0][0] in piece:
             end = game_state[0][0]
+            if end != piece[1]:
+                piece = (piece[1], piece[0])
+            game_state = [piece] + game_state
         elif game_state[-1][1] in piece:
             end = game_state[-1][1]
-
+            if end != piece[0]:
+                piece = (piece[1], piece[0])
+            game_state.append(piece)
+        else:
+            raise Exception("WRONG TURN", piece, "is not a valid move!\nThe game state is:", game_state)
         self.hand.remove(piece)
+
 
 def deal_game(player_list):
     global game_state
@@ -30,8 +43,10 @@ def deal_game(player_list):
         all_pieces = all_pieces[pieces_per_player:]
     game_state = [all_pieces[0]]
 
+
 def create_players(number_of_players):
     l = []
+    #  TODO REPLACE THIS WITH IMPORT PLAYERS
     for i in range(number_of_players):
         l.append(Player())
     return l
