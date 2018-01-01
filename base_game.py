@@ -23,9 +23,9 @@ class Game:
 
                 print(self.table)
 
-        leaderboard = sorted(possible, key=lambda player: player.score(), reverse=True)
+        leaderboard = sorted(list_players, key=lambda player: player.score())
         print(leaderboard)
-        print(player.score() for player in leaderboard)
+        print(list(player.score() for player in leaderboard))
         # for player in list_players:
 
 
