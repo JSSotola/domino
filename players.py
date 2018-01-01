@@ -31,6 +31,7 @@ def max_turn(self, table):
 	possible = sorted(possible, key=lambda x: x[0]+x[1], reverse=True)
 	return possible[0]
 
+
 # snaží se pokládat co nejmenší koncový kámen
 def min_turn(self, table):
 	firstNum = max(table[0][0], table[-1][1])
