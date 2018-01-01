@@ -7,10 +7,15 @@ class Player:
         self.hand = []
 
     def take_turn(self, game_state):
-
+        play(self.hand[0])
 
     def play(self, piece):
-        pass
+        if game_state[0][0] in piece:
+            end = game_state[0][0]
+        elif game_state[-1][1] in piece:
+            end = game_state[-1][1]
+
+        self.hand.remove(piece)
 
 def deal_game(player_list):
     global game_state
