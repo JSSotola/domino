@@ -17,12 +17,16 @@ class Game:
         self.table = [all_pieces[0]]
 
     def start_game(self):
+        print("START TABLE:")
+        print(self.table)
         while min(len(player.hand) for player in list_players) > 0 and not all(player.passed for player in list_players):
             for player in list_players:
                 player.take_turn(self.table)
 
+                print("TABLE:")
                 print(self.table)
 
+        print("---------")
         leaderboard = sorted(list_players, key=lambda player: player.score())
         print(leaderboard)
         print(list(player.score() for player in leaderboard))
@@ -51,7 +55,8 @@ class Game:
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.hand = []
         self.passed = False
 
@@ -66,9 +71,10 @@ class Player:
 
 def create_players(number_of_players):
     player_list = []
+    player_names = ["franta", "pepa", "honza", "alfred"]
     #  TODO REPLACE THIS WITH IMPORT PLAYERS
     for i in range(number_of_players):
-        player_list.append(Player())
+        player_list.append(Player(player_names[i]))
     return player_list
 
 

@@ -12,7 +12,7 @@ import random
 def possible_turns(hand, first, last):
     possible = []
     for piece in hand:
-        if piece[0] == first or piece[1] == last:
+        if first in piece or last in piece:
             possible.append(piece)
 
     return possible
@@ -23,7 +23,8 @@ def random_turn(self, table):
     first_num = table[0][0]
     last_num = table[-1][1]
     possible = possible_turns(self.hand, first_num, last_num)
-    print("P", possible)
+    print(self.name+" hand: ", self.hand)
+    print(self.name+" possible: ", possible)
     if len(possible) == 0:
         return "PASS"
     else:
