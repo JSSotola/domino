@@ -79,9 +79,9 @@ class Player:
 
 def create_players():
     player_list = []
-    player_names = ["franta", "pepa", "honza", "borec"]
+    player_names = ["franta", "pepa", "honza", "milada", "anabela", "myšák", "fík", "Jon", "Kristýna", "Ferenc", "borec"]
     #  TODO REPLACE THIS WITH IMPORT PLAYERS
-    for i in range(3):
+    for i in range(4):
         player_list.append(Player(player_names[i], random_turn))
     player_list.append(Player(player_names[-1], max_turn))
     return player_list
@@ -95,7 +95,8 @@ if __name__ == "__main__":
     for p in list_players:
         stats[p.name] = {"name": p.name, "score": 0, "wins": 0}
 
-    for i in range(10000):
+    N = 10000
+    for i in range(N):
         # print("================== game #", i, "===================")
         game.deal(list_players)
         players = game.start_game()
@@ -107,3 +108,5 @@ if __name__ == "__main__":
 
     leaderboard = sorted(list_players, key=lambda player: stats[player.name]["score"])
     print(list(stats[player.name] for player in leaderboard))
+
+    print(stats[leaderboard[0].name]["wins"]/float(N)*100.0)

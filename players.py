@@ -48,8 +48,8 @@ def min_turn(self, table):
     lastNum = min(table[0][0], table[-1][1])
     possible = possible_turns(self.hand, firstNum, lastNum)
 
-    # possible = sorted(possible, key=lambda x: 1 if x[0]==firstNum or x[1]==firstNum else 0, reverse=True)
-    return possible[0]
-
-# player = Player([(1,2), (1,3), (4,5)], max_turn)
-# print(player.turn([(1,5), (5,5)]))
+    possible = sorted(possible, key=lambda p: 10+min(p) if firstNum in p else min(p), reverse=True)
+    if len(possible) == 0:
+        return "PASS"
+    else:
+        return possible[0]
