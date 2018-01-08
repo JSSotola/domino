@@ -81,7 +81,8 @@ def create_players():
     player_list = []
     player_names = ["franta", "pepa", "honza", "milada", "anabela", "myšák", "fík", "Jon", "Kristýna", "Ferenc", "borec"]
     #  TODO REPLACE THIS WITH IMPORT PLAYERS
-    for i in range(4):
+	# todo: fix missing starting piece in case of piece count divisible by player count
+    for i in range(3):
         player_list.append(Player(player_names[i], random_turn))
     player_list.append(Player(player_names[-1], max_turn))
     return player_list
@@ -107,6 +108,8 @@ if __name__ == "__main__":
             stats[p.name]["score"] += p.score()
 
     leaderboard = sorted(list_players, key=lambda player: stats[player.name]["score"])
-    print(list(stats[player.name] for player in leaderboard))
+
+    for player in leaderboard:
+        print(stats[player.name])
 
     print(stats[leaderboard[0].name]["wins"]/float(N)*100.0)
